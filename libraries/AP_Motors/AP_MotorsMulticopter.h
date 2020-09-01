@@ -84,6 +84,9 @@ public:
     int16_t             get_pwm_output_min() const;
     int16_t             get_pwm_output_max() const;
     
+    // set_motor_fail_trigger - controls if motor fail should be activate [MC**]
+    void set_motor_fail_trigger(bool fail);   
+    
     // parameter check for MOT_PWM_MIN/MAX, returns true if parameters are valid
     bool check_mot_pwm_params() const;
 
@@ -179,6 +182,11 @@ protected:
     // scaling for booster motor throttle
     AP_Float            _boost_scale;
 
+    // motor failure [MC**]
+    AP_Int8             _motor_fail_number;     // Controls which motor will slow when simulating a motor-failure
+    AP_Int8             _motor_fail_percent;    // Controls how much slow (as a percentage of it's regular speed) the failed motor will run (100 = stopped, 0 = normal)
+    bool                _motor_fail;    
+    
     // motor output variables
     bool                motor_enabled[AP_MOTORS_MAX_NUM_MOTORS];    // true if motor is enabled
     int16_t             _throttle_radio_min;        // minimum PWM from RC input's throttle channel (i.e. minimum PWM input from receiver, RC3_MIN)

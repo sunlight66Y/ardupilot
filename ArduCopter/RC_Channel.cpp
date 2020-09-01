@@ -113,6 +113,7 @@ void RC_Channel_Copter::init_aux_function(const aux_func_t ch_option, const AuxS
     case AUX_FUNC::SUPERSIMPLE_MODE:
     case AUX_FUNC::SURFACE_TRACKING:
     case AUX_FUNC::WINCH_ENABLE:
+    case AUX_FUNC::MOTOR_FAIL: // motor fault [MC**]        
         do_aux_function(ch_option, ch_flag);
         break;
     case AUX_FUNC::AIRMODE:
@@ -573,7 +574,20 @@ void RC_Channel_Copter::do_aux_function(const aux_func_t ch_option, const AuxSwi
                 break;
             }
             break;
-
+            
+        // motor fault set [MC**]   
+        case AUX_FUNC::MOTOR_FAIL:
+            switch (ch_flag) {
+                case AuxSwitchPos::LOW:
+                case AuxSwitchPos::MIDDLE:
+                    copter.motors->set_motor_fail_trigger(false);
+                    break;
+                case AuxSwitchPos::HIGH:
+                    copter.motors->set_motor_fail_trigger(true);
+                    break;
+            }
+        break;
+            
         case AUX_FUNC::ZIGZAG_Auto:
 #if MODE_ZIGZAG_ENABLED == ENABLED
             if (copter.flightmode == &copter.mode_zigzag) {

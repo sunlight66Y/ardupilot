@@ -197,6 +197,7 @@ public:
         GPS_DISABLE_YAW =    105, // disable GPS yaw for testing
         // if you add something here, make sure to update the documentation of the parameter in RC_Channel.cpp!
         // also, if you add an option >255, you will need to fix duplicate_options_exist
+        MOTOR_FAIL  =        110,  // motor failure, need to set this parameter in GCS [MC**]        
 
         // inputs from 200 will eventually used to replace RCMAP
         ROLL =               201, // roll input

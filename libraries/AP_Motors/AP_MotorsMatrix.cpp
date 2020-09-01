@@ -98,6 +98,11 @@ void AP_MotorsMatrix::output_to_motors()
             break;
     }
 
+    // check for simulated motor failure; 0: no fault, 100: stop
+    if (_motor_fail && (_motor_fail_number > 0) && (_motor_fail_number < AP_MOTORS_MAX_NUM_MOTORS) && (_motor_fail_percent > 0)) {
+        _actuator[_motor_fail_number-1] = _actuator[_motor_fail_number-1] * (1.0f - _motor_fail_percent / 100.0f);
+    }
+    
     // convert output to PWM and send to each motor
     for (i = 0; i < AP_MOTORS_MAX_NUM_MOTORS; i++) {
         if (motor_enabled[i]) {

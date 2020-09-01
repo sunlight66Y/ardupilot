@@ -64,9 +64,7 @@
 #if FRAME_CONFIG == HELI_FRAME
   # define RC_FAST_SPEED                        125
   # define WP_YAW_BEHAVIOR_DEFAULT              WP_YAW_BEHAVIOR_LOOK_AHEAD
-  # define THR_MIN_DEFAULT                      0
   # define AUTOTUNE_ENABLED                     DISABLED
-  # define ACCEL_Z_P                            0.30f
 #endif
 
 //////////////////////////////////////////////////////////////////////////////
@@ -207,12 +205,9 @@
 #endif
 
 //////////////////////////////////////////////////////////////////////////////
-//  OPTICAL_FLOW & VISUAL ODOMETRY
+//  OPTICAL_FLOW
 #ifndef OPTFLOW
  # define OPTFLOW       ENABLED
-#endif
-#ifndef VISUAL_ODOMETRY_ENABLED
-# define VISUAL_ODOMETRY_ENABLED !HAL_MINIMIZE_FEATURES
 #endif
 
 //////////////////////////////////////////////////////////////////////////////
@@ -242,7 +237,7 @@
 //////////////////////////////////////////////////////////////////////////////
 // winch support
 #ifndef WINCH_ENABLED
-# define WINCH_ENABLED DISABLED
+# define WINCH_ENABLED !HAL_MINIMIZE_FEATURES
 #endif
 
 //////////////////////////////////////////////////////////////////////////////
@@ -370,9 +365,6 @@
 #ifndef MODE_ZIGZAG_ENABLED
 # define MODE_ZIGZAG_ENABLED !HAL_MINIMIZE_FEATURES
 #endif
-#if MODE_ZIGZAG_ENABLED == ENABLED && HAL_SPRAYER_ENABLED
-# define ZIGZAG_AUTO_PUMP_ENABLED DISABLED
-#endif
 
 //////////////////////////////////////////////////////////////////////////////
 
@@ -490,14 +482,6 @@
 #endif
 
 //////////////////////////////////////////////////////////////////////////////
-// MOUNT (ANTENNA OR CAMERA)
-//
-#ifndef MOUNT
- # define MOUNT         ENABLED
-#endif
-
-
-//////////////////////////////////////////////////////////////////////////////
 // Flight mode definitions
 //
 
@@ -540,7 +524,7 @@
 #endif
 
 #ifndef RTL_ALT
- # define RTL_ALT 				    1500    // default alt to return to home in cm, 0 = Maintain current altitude
+ # define RTL_ALT                   1500    // default alt to return to home in cm, 0 = Maintain current altitude
 #endif
 
 #ifndef RTL_ALT_MIN

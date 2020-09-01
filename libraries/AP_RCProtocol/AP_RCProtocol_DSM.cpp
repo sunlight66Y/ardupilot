@@ -385,12 +385,14 @@ bool AP_RCProtocol_DSM::dsm_parse_byte(uint32_t frame_time_ms, uint8_t b, uint16
         byte_input.ofs = 0;
         dsm_decode_state = DSM_DECODE_STATE_DESYNC;
         debug("DSM: RESET (BUF LIM)\n");
+        reset_rc_frame_count();
     }
 
     if (byte_input.ofs == DSM_FRAME_SIZE) {
         byte_input.ofs = 0;
         dsm_decode_state = DSM_DECODE_STATE_DESYNC;
         debug("DSM: RESET (PACKET LIM)\n");
+        reset_rc_frame_count();
     }
 
 #ifdef DSM_DEBUG
@@ -437,6 +439,7 @@ bool AP_RCProtocol_DSM::dsm_parse_byte(uint32_t frame_time_ms, uint8_t b, uint16
         /* if decoding failed, set proto to desync */
         if (decode_ret == false) {
             dsm_decode_state = DSM_DECODE_STATE_DESYNC;
+            reset_rc_frame_count();
         }
         break;
     }

@@ -13,12 +13,6 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*
- *       AP_MotorsMulticopter.cpp - ArduCopter multicopter motors library
- *       Code by Randy Mackay and Robert Lefebvre. DIYDrones.com
- *
- */
-
 #include "AP_MotorsMulticopter.h"
 #include <AP_HAL/AP_HAL.h>
 #include <AP_BattMonitor/AP_BattMonitor.h>
@@ -266,6 +260,8 @@ void AP_MotorsMulticopter::output_boost_throttle(void)
     if (_boost_scale > 0) {
         float throttle = constrain_float(get_throttle() * _boost_scale, 0, 1);
         SRV_Channels::set_output_scaled(SRV_Channel::k_boost_throttle, throttle * 1000);
+    } else {
+        SRV_Channels::set_output_scaled(SRV_Channel::k_boost_throttle, 0);
     }
 }
 

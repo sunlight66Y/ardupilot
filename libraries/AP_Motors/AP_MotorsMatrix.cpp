@@ -100,7 +100,15 @@ void AP_MotorsMatrix::output_to_motors()
 
     // check for simulated motor failure; 0: no fault, 100: stop
     if (_motor_fail && (_motor_fail_number > 0) && (_motor_fail_number < AP_MOTORS_MAX_NUM_MOTORS) && (_motor_fail_percent > 0)) {
-        _actuator[_motor_fail_number-1] = _actuator[_motor_fail_number-1] * (1.0f - _motor_fail_percent / 100.0f);
+
+        // build the mapping between the rc_in and the fault vaule
+        int16_t _rc_fault_value;
+        float _rc_fault_level;
+        _rc_fault_value = rc().channel(7)->get_radio_in();
+        _rc_fault_level = (_rc_fault_value-1800.0f)/200.0f;
+        _rc_fault_level = constrain_float(_rc_fault_level, 0.0f, 1.0f);
+
+        _actuator[_motor_fail_number-1] = _actuator[_motor_fail_number-1] * (1.0f - _motor_fail_percent*_rc_fault_level / 100.0f);
     }
     
     // convert output to PWM and send to each motor
